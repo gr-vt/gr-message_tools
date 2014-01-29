@@ -79,7 +79,7 @@ namespace gr {
 
 
     message_file_sink_impl::message_file_sink_impl(const char* filename)
-      : gr::sync_block("message_file_sink",
+      : gr::block("message_file_sink",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0))
     {
