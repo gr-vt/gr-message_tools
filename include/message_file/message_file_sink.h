@@ -23,8 +23,8 @@
 #define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H
 
 #include <message_file/api.h>
-#include <gnuradio/blocks/file_sink_base.h>
 #include <gnuradio/block.h>
+#include <gnuradio/blocks/file_sink_base.h>
 
 namespace gr {
   namespace message_file {
