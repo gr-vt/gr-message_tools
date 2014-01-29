@@ -35,23 +35,64 @@ namespace gr {
         (new message_file_sink_impl(filename));
     }
 
-    /*
-     * The private constructor
-     */
+    void
+    message_file_sink_impl::print_pdu(pmt::pmt_t pdu)
+    {
+      pmt::pmt_t meta = pmt::car(pdu);
+      pmt::pmt_t vector = pmt::cdr(pdu);
+      std::cout << "* MESSAGE DEBUG PRINT PDU VERBOSE *\n";
+      pmt::print(meta);
+      size_t len = pmt::length(vector);
+      std::cout << "pdu_length = " << len << std::endl;
+      std::cout << "contents = " << std::endl;
+      size_t offset(0);
+      const uint8_t* d = (const uint8_t*) pmt::uniform_vector_elements(vector, offset);
+      for(size_t i=0; i<len; i+=16){
+        printf("%04x: ", ((unsigned int)i));
+        for(size_t j=i; j<std::min(i+16,len); j++){
+          printf("%02x ",d[j] );
+        }
+
+        std::cout << std::endl;
+      }
+
+      std::cout << "***********************************\n";
+    }
+
+    int
+    message_file_sink_impl::num_messages()
+    {
+      return (int)d_messages.size();
+    }
+
+    pmt::pmt_t
+    message_file_sink_impl::get_message(int i)
+    {
+      gr::thread::scoped_lock guard(d_mutex);
+
+      if((size_t)i >= d_messages.size()) {
+        throw std::runtime_error("message_debug: index for message out of bounds.\n");
+      }
+
+      return d_messages[i];
+    }
+
+
     message_file_sink_impl::message_file_sink_impl(const char* filename)
       : gr::sync_block("message_file_sink",
-              gr::io_signature::make(<+MIN_IN+>, <+MAX_IN+>, sizeof(<+ITYPE+>)),
+              gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0))
-    {}
+    {
+      message_port_register_in(pmt::mp("print_pdu"));
+      set_msg_handler(pmt::mp("print_pdu"), boost::bind(&message_file_sink_impl::print_pdu, this, _1));
+    }
 
-    /*
-     * Our virtual destructor.
-     */
+
     message_file_sink_impl::~message_file_sink_impl()
     {
     }
 
-    int
+/*    int
     message_file_sink_impl::work(int noutput_items,
 			  gr_vector_const_void_star &input_items,
 			  gr_vector_void_star &output_items)
@@ -62,7 +103,7 @@ namespace gr {
 
         // Tell runtime system how many output items we produced.
         return noutput_items;
-    }
+    }*/
 
   } /* namespace message_file */
 } /* namespace gr */

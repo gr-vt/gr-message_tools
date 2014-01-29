@@ -22,6 +22,9 @@
 #define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_IMPL_H
 
 #include <message_file/message_file_sink.h>
+#include <gnuradio/block.h>
+#include <gnuradio/thread/thread.h>
+#include <pmt/pmt.h>
 
 namespace gr {
   namespace message_file {
@@ -29,16 +32,22 @@ namespace gr {
     class message_file_sink_impl : public message_file_sink
     {
      private:
-      // Nothing to declare in this block.
+      void print_pdu(pmt::pmt_t pdu);
+
+      gr::thread::mutex d_mutex;
+      std::vector<pmt::pmt_t> d_messages;
 
      public:
       message_file_sink_impl(const char* filename);
       ~message_file_sink_impl();
 
       // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
+      //int work(int noutput_items,
+	    //   gr_vector_const_void_star &input_items,
+	    //   gr_vector_void_star &output_items);
+      
+      int num_messages();
+      pmt::pmt_t get_message(int i);
     };
 
   } // namespace message_file

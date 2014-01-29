@@ -23,30 +23,21 @@
 #define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H
 
 #include <message_file/api.h>
-#include <gnuradio/sync_block.h>
+#include <gnuradio/block.h>
 
 namespace gr {
   namespace message_file {
 
-    /*!
-     * \brief <+description of block+>
-     * \ingroup message_file
-     *
-     */
-    class MESSAGE_FILE_API message_file_sink : virtual public gr::sync_block
+    class MESSAGE_FILE_API message_file_sink : virtual public block
     {
      public:
       typedef boost::shared_ptr<message_file_sink> sptr;
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of message_file::message_file_sink.
-       *
-       * To avoid accidental use of raw pointers, message_file::message_file_sink's
-       * constructor is in a private implementation
-       * class. message_file::message_file_sink::make is the public interface for
-       * creating new instances.
-       */
       static sptr make(const char* filename);
+
+      virtual int num_messages() = 0;
+
+      virtual pmt::pmt_t get_message(int i) = 0;
     };
 
   } // namespace message_file
