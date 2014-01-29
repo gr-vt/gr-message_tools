@@ -74,11 +74,11 @@ namespace gr {
 
       std::cout << "***********************************\n";
       sout << "\n";
-      /*
+      
       do_update();
       if(d_fp){
         std::string payload = sout.str();
-        char *inbuf = (char *)payload;
+        char *inbuf = (char *)payload.c_str();
         int nwritten = 0;
         int to_write = payload.length()+1;
         while(nwritten < to_write) {
@@ -97,7 +97,8 @@ namespace gr {
           inbuf += count * d_itemsize;
         }
 
-        fflush (d_fp);*/
+        fflush (d_fp);
+      }
     }
 
     int
