@@ -30,7 +30,7 @@ namespace gr {
   namespace message_file {
 
     class MESSAGE_FILE_API message_file_sink : virtual public block,
-                                               virtual public file_sink_base
+                                               virtual public blocks::file_sink_base
     {
      public:
       typedef boost::shared_ptr<message_file_sink> sptr;
