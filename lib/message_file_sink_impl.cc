@@ -32,17 +32,17 @@ namespace gr {
   namespace message_file {
 
     message_file_sink::sptr
-    message_file_sink::make(const char* filename)
+    message_file_sink::make(const char* filename, bool append)
     {
       return gnuradio::get_initial_sptr
-        (new message_file_sink_impl(filename));
+        (new message_file_sink_impl(filename, append));
     }
 
-    message_file_sink_impl::message_file_sink_impl(const char* filename)
+    message_file_sink_impl::message_file_sink_impl(const char* filename, bool append)
       : gr::block("message_file_sink",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
-        file_sink_base(filename, true, false),
+        file_sink_base(filename, true, append),
         d_itemsize(1)
     {
       message_port_register_in(pmt::mp("print_pdu"));
@@ -96,8 +96,9 @@ namespace gr {
           nwritten += count;
           inbuf += count * d_itemsize;
         }
-
-        fflush (d_fp);
+        
+        if(d_unbuffered)
+          fflush (d_fp);
       }
     }
 

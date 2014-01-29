@@ -40,7 +40,7 @@ namespace gr {
       std::vector<pmt::pmt_t> d_messages;
 
      public:
-      message_file_sink_impl(const char* filename);
+      message_file_sink_impl(const char* filename, bool append=false);
       ~message_file_sink_impl();
 
       // Where all the action really happens
@@ -50,6 +50,7 @@ namespace gr {
       
       int num_messages();
       pmt::pmt_t get_message(int i);
+      void set_unbuffered(bool unbuffered){ blocks::file_sink_base::set_unbuffered(unbuffered); }
     };
 
   } // namespace message_file

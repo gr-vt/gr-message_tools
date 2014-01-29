@@ -1,17 +1,52 @@
 <?xml version="1.0"?>
+<!--
+###################################################
+##Message File Sink
+###################################################
+ -->
 <block>
-  <name>message_file_sink</name>
+  <name>Message File Sink</name>
   <key>message_file_message_file_sink</key>
   <category>message_file</category>
   <import>import message_file</import>
-  <!--<import>from gnuradio import blocks</import>-->
-  <make>message_file.message_file_sink($filename)</make>
+  <make>message_file.message_file_sink($filename,$append)
+self.$(id).set_unbuffered($unbuffered)</make>
+	<callback>set_unbuffered($unbuffered)</callback>
+	<callback>open($filename)</callback>
   <param>
     <name>File</name>
     <key>filename</key>
     <value></value>
     <type>file_save</type>
-    </param>
+  </param>
+	<param>
+		<name>Unbuffered</name>
+		<key>unbuffered</key>
+		<value>False</value>
+		<type>bool</type>
+		<option>
+				<name>Off</name>
+				<key>False</key>
+		</option>
+		<option>
+				<name>On</name>
+				<key>True</key>
+		</option>
+	</param>
+	<param>
+		<name>Append file</name>
+		<key>append</key>
+		<value>False</value>
+		<type>bool</type>
+		<option>
+			<name>Append</name>
+			<key>True</key>
+		</option>
+		<option>
+			<name>Overwrite</name>
+			<key>False</key>
+		</option>
+	</param>
   <sink>
     <name>print_pdu</name>
     <type>message</type>

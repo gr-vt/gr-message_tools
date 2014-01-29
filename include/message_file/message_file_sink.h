@@ -35,11 +35,13 @@ namespace gr {
      public:
       typedef boost::shared_ptr<message_file_sink> sptr;
 
-      static sptr make(const char* filename);
+      static sptr make(const char* filename, bool append=false);
 
       virtual int num_messages() = 0;
 
       virtual pmt::pmt_t get_message(int i) = 0;
+
+      virtual void set_unbuffered(bool unbuffered) = 0;
     };
 
   } // namespace message_file
