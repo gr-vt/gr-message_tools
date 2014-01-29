@@ -22,8 +22,11 @@
 #include "config.h"
 #endif
 
-#include <gnuradio/io_signature.h>
 #include "message_file_sink_impl.h"
+#include <gnuradio/io_signature.h>
+#include <stdexcept>
+#include <boost/format.hpp>
+#include <sstream>
 
 namespace gr {
   namespace message_file {
@@ -35,9 +38,21 @@ namespace gr {
         (new message_file_sink_impl(filename));
     }
 
+    message_file_sink_impl::message_file_sink_impl(const char* filename)
+      : gr::block("message_file_sink",
+              gr::io_signature::make(0, 0, 0),
+              gr::io_signature::make(0, 0, 0)),
+        file_sink_base(filename, true, true),
+        d_itemsize(1)
+    {
+      message_port_register_in(pmt::mp("print_pdu"));
+      set_msg_handler(pmt::mp("print_pdu"), boost::bind(&message_file_sink_impl::print_pdu, this, _1));
+    }
+
     void
     message_file_sink_impl::print_pdu(pmt::pmt_t pdu)
     {
+      std::stringstream sout;
       pmt::pmt_t meta = pmt::car(pdu);
       pmt::pmt_t vector = pmt::cdr(pdu);
       std::cout << "* MESSAGE DEBUG PRINT PDU VERBOSE *\n";
@@ -51,12 +66,38 @@ namespace gr {
         printf("%04x: ", ((unsigned int)i));
         for(size_t j=i; j<std::min(i+16,len); j++){
           printf("%02x ",d[j] );
+          sout << boost::format("%02x ")%d[j];
         }
 
         std::cout << std::endl;
       }
 
       std::cout << "***********************************\n";
+      sout << "\n";
+      
+      do_update();
+      if(d_fp){
+        std::string payload = sout.str();
+        char *inbuf = (char *)payload;
+        int nwritten = 0;
+        int to_write = payload.length()+1;
+        while(nwritten < to_write) {
+          int count = fwrite(inbuf, d_itemsize, to_write - nwritten, d_fp);
+          if(count == 0) {
+            if(ferror(d_fp)) {
+              std::stringstream s;
+              s << "file_sink write failed with error " << fileno(d_fp) << std::endl;
+              throw std::runtime_error(s.str());
+            }
+            else { // is EOF
+              break;
+            }
+          }
+          nwritten += count;
+          inbuf += count * d_itemsize;
+        }
+
+        fflush (d_fp);
     }
 
     int
@@ -77,17 +118,6 @@ namespace gr {
       return d_messages[i];
     }
 
-
-    message_file_sink_impl::message_file_sink_impl(const char* filename)
-      : gr::block("message_file_sink",
-              gr::io_signature::make(0, 0, 0),
-              gr::io_signature::make(0, 0, 0))
-    {
-      message_port_register_in(pmt::mp("print_pdu"));
-      set_msg_handler(pmt::mp("print_pdu"), boost::bind(&message_file_sink_impl::print_pdu, this, _1));
-    }
-
-
     message_file_sink_impl::~message_file_sink_impl()
     {
     }
@@ -97,12 +127,34 @@ namespace gr {
 			  gr_vector_const_void_star &input_items,
 			  gr_vector_void_star &output_items)
     {
-        const <+ITYPE+> *in = (const <+ITYPE+> *) input_items[0];
+      char *inbuf = (char*)input_items[0];
+      int  nwritten = 0;
 
-        // Do <+signal processing+>
+      do_update();                    // update d_fp is reqd
 
-        // Tell runtime system how many output items we produced.
-        return noutput_items;
+      if(!d_fp)
+        return noutput_items;         // drop output on the floor
+
+      while(nwritten < noutput_items) {
+        int count = fwrite(inbuf, d_itemsize, noutput_items - nwritten, d_fp);
+        if(count == 0) {
+          if(ferror(d_fp)) {
+            std::stringstream s;
+            s << "file_sink write failed with error " << fileno(d_fp) << std::endl;
+            throw std::runtime_error(s.str());
+          }
+          else { // is EOF
+            break;
+          }
+        }
+        nwritten += count;
+        inbuf += count * d_itemsize;
+      }
+
+      if(d_unbuffered)
+        fflush (d_fp);
+
+      return nwritten;
     }*/
 
   } /* namespace message_file */

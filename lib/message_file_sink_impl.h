@@ -22,7 +22,7 @@
 #define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_IMPL_H
 
 #include <message_file/message_file_sink.h>
-#include <gnuradio/block.h>
+//#include <gnuradio/block.h>
 #include <gnuradio/thread/thread.h>
 #include <pmt/pmt.h>
 
@@ -32,6 +32,8 @@ namespace gr {
     class message_file_sink_impl : public message_file_sink
     {
      private:
+      size_t d_itemsize;
+
       void print_pdu(pmt::pmt_t pdu);
 
       gr::thread::mutex d_mutex;

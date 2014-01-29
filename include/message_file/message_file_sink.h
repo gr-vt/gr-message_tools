@@ -23,12 +23,14 @@
 #define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H
 
 #include <message_file/api.h>
+#include <gnuradio/blocks/file_sink_base.h>
 #include <gnuradio/block.h>
 
 namespace gr {
   namespace message_file {
 
-    class MESSAGE_FILE_API message_file_sink : virtual public block
+    class MESSAGE_FILE_API message_file_sink : virtual public block,
+                                               virtual public file_sink_base
     {
      public:
       typedef boost::shared_ptr<message_file_sink> sptr;
