@@ -42,7 +42,7 @@ namespace gr {
       : gr::block("message_file_sink",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
-        file_sink_base(filename, true, true),
+        file_sink_base(filename, true, false),
         d_itemsize(1)
     {
       message_port_register_in(pmt::mp("print_pdu"));
@@ -80,7 +80,7 @@ namespace gr {
         std::string payload = sout.str();
         char *inbuf = (char *)payload.c_str();
         int nwritten = 0;
-        int to_write = payload.length()+1;
+        int to_write = payload.length();
         while(nwritten < to_write) {
           int count = fwrite(inbuf, d_itemsize, to_write - nwritten, d_fp);
           if(count == 0) {
