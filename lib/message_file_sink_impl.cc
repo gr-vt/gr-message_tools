@@ -42,7 +42,7 @@ namespace gr {
       : gr::block("message_file_sink",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
-       // file_sink_base(filename, true, true),
+        file_sink_base(filename, true, true),
         d_itemsize(1)
     {
       message_port_register_in(pmt::mp("print_pdu"));
@@ -55,24 +55,24 @@ namespace gr {
       std::stringstream sout;
       pmt::pmt_t meta = pmt::car(pdu);
       pmt::pmt_t vector = pmt::cdr(pdu);
-      std::cout << "* MESSAGE DEBUG PRINT PDU VERBOSE *\n";
-      pmt::print(meta);
+      //std::cout << "* MESSAGE DEBUG PRINT PDU VERBOSE *\n";
+      //pmt::print(meta);
       size_t len = pmt::length(vector);
-      std::cout << "pdu_length = " << len << std::endl;
-      std::cout << "contents = " << std::endl;
+      //std::cout << "pdu_length = " << len << std::endl;
+      //std::cout << "contents = " << std::endl;
       size_t offset(0);
       const uint8_t* d = (const uint8_t*) pmt::uniform_vector_elements(vector, offset);
       for(size_t i=0; i<len; i+=16){
-        printf("%04x: ", ((unsigned int)i));
+        //printf("%04x: ", ((unsigned int)i));
         for(size_t j=i; j<std::min(i+16,len); j++){
-          printf("%02x ",d[j] );
-          sout << boost::format("%02x ")%d[j];
+          //printf("%02x ",d[j] );
+          sout << boost::format("%02x ")%((unsigned int)d[j]);
         }
 
-        std::cout << std::endl;
+        //std::cout << std::endl;
       }
 
-      std::cout << "***********************************\n";
+      //std::cout << "***********************************\n";
       sout << "\n";
       
       do_update();
