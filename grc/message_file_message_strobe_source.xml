@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<block>
+  <name>Message Strobe Source</name>
+  <key>message_file_message_strobe_source</key>
+  <category>message_file</category>
+  <import>import message_file</import>
+	<import>import pmt</import>
+  <make>message_file.message_strobe_source($high, $low, $file, $repeat)</make>
+    <callback>set_highP($high)</callback>
+    <callback>set_lowP($low)</callback>
+    <callback>open($file,$repeat)</callback>
+	<param>
+		<name>File</name>
+		<key>file</key>
+		<value></value>
+		<type>file_open</type>
+	</param>
+	<param>
+		<name>Repeat</name>
+		<key>repeat</key>
+		<value>True</value>
+		<type>enum</type>
+		<option>
+			<name>Yes</name>
+			<key>True</key>
+		</option>
+		<option>
+			<name>No</name>
+			<key>False</key>
+		</option>
+	</param>
+	<param>
+		<name>Period High (ms)</name>
+		<key>high</key>
+		<value>1000</value>
+		<type>real</type>
+	</param>
+	<param>
+		<name>Period low (ms)</name>
+		<key>low</key>
+		<value>1000</value>
+		<type>real</type>
+	</param>
+
+	<source>
+		<name>strobe</name>
+		<type>message</type>
+        <optional>1</optional>
+	</source>
+</block>

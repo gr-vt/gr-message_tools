@@ -22,5 +22,6 @@
 ########################################################################
 install(FILES
     api.h
-    message_file_sink.h DESTINATION include/message_file
+    message_file_sink.h
+    message_strobe_source.h DESTINATION include/message_file
 )

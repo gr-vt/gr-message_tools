@@ -9,8 +9,11 @@
 
 %{
 #include "message_file/message_file_sink.h"
+#include "message_file/message_strobe_source.h"
 %}
 
 
 %include "message_file/message_file_sink.h"
 GR_SWIG_BLOCK_MAGIC2(message_file, message_file_sink);
+%include "message_file/message_strobe_source.h"
+GR_SWIG_BLOCK_MAGIC2(message_file, message_strobe_source);
