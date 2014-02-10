@@ -24,6 +24,7 @@
 
 #include <gnuradio/io_signature.h>
 #include "message_strobe_source_impl.h"
+#include <fcntl.h>
 //#include <iostream>
 
 
