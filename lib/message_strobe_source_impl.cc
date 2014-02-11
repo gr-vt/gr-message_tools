@@ -73,6 +73,7 @@ namespace gr {
       open(filename, repeat);
       seed();
       set_period();
+      get_msg_strobe();
     }
 
     /*
@@ -145,8 +146,8 @@ namespace gr {
         //message_port_pub(pmt::mp("strobe"), d_msg);
         do_update();
         if(d_fp == NULL)  throw std::runtime_error("work with file not open");
-        get_msg_strobe();
         print_msg_strobe();
+        get_msg_strobe();
       }
       exit(0);
     }
