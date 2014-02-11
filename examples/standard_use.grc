@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='ASCII'?>
 <flow_graph>
-  <timestamp>Mon Feb 10 19:57:28 2014</timestamp>
+  <timestamp>Tue Feb 11 12:45:08 2014</timestamp>
   <block>
     <key>options</key>
     <param>
@@ -84,41 +84,6 @@
     </param>
   </block>
   <block>
-    <key>message_file_message_file_sink</key>
-    <param>
-      <key>id</key>
-      <value>message_file_message_file_sink_0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>filename</key>
-      <value>./msg_file_out.dat</value>
-    </param>
-    <param>
-      <key>unbuffered</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>append</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(703, 243)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>message_file_message_strobe_source</key>
     <param>
       <key>id</key>
@@ -130,7 +95,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>./msg_file_format.dat</value>
+      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_format.dat</value>
     </param>
     <param>
       <key>repeat</key>
@@ -159,6 +124,41 @@
     <param>
       <key>_coordinate</key>
       <value>(360, 236)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>message_file_message_file_sink</key>
+    <param>
+      <key>id</key>
+      <value>message_file_message_file_sink_0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>filename</key>
+      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_out.dat</value>
+    </param>
+    <param>
+      <key>unbuffered</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>append</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(703, 243)</value>
     </param>
     <param>
       <key>_rotation</key>
