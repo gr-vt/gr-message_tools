@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<block>
+  <name>Message Vector Strobe</name>
+  <key>message_file_msg_vector_strobe</key>
+  <category>message_file</category>
+  <import>import message_file</import>
+  <make>message_file.msg_vector_strobe($high, $low, $msg_vector)</make>
+    <callback>set_highP($high)</callback>
+    <callback>set_lowP($low)</callback>
+    <callback>set_msg_vec($msg_vector)</callback>
+
+	<param>
+		<name>Period High (ms)</name>
+		<key>high</key>
+		<value>1000</value>
+		<type>real</type>
+	</param>
+	<param>
+		<name>Period low (ms)</name>
+		<key>low</key>
+		<value>1000</value>
+		<type>real</type>
+	</param>
+	<param>
+		<name>Message Vector</name>
+		<key>msg_vector</key>
+		<value>0,1,0,1</value>
+		<type>int_vector</type>
+	</param>
+
+	<source>
+		<name>strobe</name>
+		<type>message</type>
+        <optional>1</optional>
+	</source>
+
+  <doc>
+      This takes an int vector and sends out a pmt msg version of it.
+      int range -> [0,255];
+  </doc>
+</block>

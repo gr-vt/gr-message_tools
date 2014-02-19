@@ -19,5 +19,6 @@
 
 install(FILES
     message_file_message_file_sink.xml
-    message_file_message_strobe_source.xml DESTINATION share/gnuradio/grc/blocks
+    message_file_message_strobe_source.xml
+    message_file_msg_vector_strobe.xml DESTINATION share/gnuradio/grc/blocks
 )

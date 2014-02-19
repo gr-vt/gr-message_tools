@@ -23,5 +23,6 @@
 install(FILES
     api.h
     message_file_sink.h
-    message_strobe_source.h DESTINATION include/message_file
+    message_strobe_source.h
+    msg_vector_strobe.h DESTINATION include/message_file
 )
