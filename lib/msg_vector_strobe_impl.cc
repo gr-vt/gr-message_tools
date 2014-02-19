@@ -71,9 +71,11 @@ namespace gr {
       d_thread->join();
     }
 
-    void message_strobe_source_impl::get_msg_strobe()
+    void msg_vector_strobe_impl::get_msg_strobe()
     {
-      pmt::pmt_t vec_pdu = pmt::init_s8vector((size_t)d_data.size(), &d_data[0]);
+      int8_t mess_vec[d_data.size()];
+      memcpy( &mess_vec[0], &d_data[0], sizeof(uint8_t)*d_data.size() );
+      pmt::pmt_t vec_pdu = pmt::init_s8vector((size_t)d_data.size(), &mess_vec[0]);
       d_msg = pmt::cons(pmt::PMT_NIL, vec_pdu);
       d_updated = false;
     }
@@ -89,6 +91,7 @@ namespace gr {
         if(d_updated) { get_msg_strobe(); }
         message_port_pub(pmt::mp("strobe"), d_msg);
       }
+    }
 
     void msg_vector_strobe_impl::seed()
     {
@@ -99,7 +102,6 @@ namespace gr {
     {
       float temp = rand() / float(RAND_MAX);
       d_period_ms = (d_high_ms - d_low_ms) * temp + d_low_ms;
-    }
     }
 
   } /* namespace message_file */
