@@ -1,38 +1,26 @@
 <?xml version="1.0"?>
 <block>
-  <name>msg_vector_sink</name>
+  <name>Message Vector Sink</name>
   <key>message_file_msg_vector_sink</key>
   <category>message_file</category>
   <import>import message_file</import>
-  <make>message_file.msg_vector_sink()</make>
-  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
-       Sub-nodes:
-       * name
-       * key (makes the value accessible as $keyname, e.g. in the make node)
-       * type -->
-  <param>
-    <name>...</name>
-    <key>...</key>
-    <type>...</type>
-  </param>
+  <make>message_file.msg_vector_sink($vlen)</make>
 
-  <!-- Make one 'sink' node per input. Sub-nodes:
-       * name (an identifier for the GUI)
-       * type
-       * vlen
-       * optional (set to 1 for optional inputs) -->
+	<param>
+		<name>Vec Length</name>
+		<key>vlen</key>
+		<value>1</value>
+		<type>int</type>
+	</param>
+
   <sink>
-    <name>in</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
+    <name>print_pdu</name>
+    <type>message</type>
+    <optional>1</optional>
   </sink>
 
-  <!-- Make one 'source' node per output. Sub-nodes:
-       * name (an identifier for the GUI)
-       * type
-       * vlen
-       * optional (set to 1 for optional inputs) -->
-  <source>
-    <name>out</name>
-    <type><!-- e.g. int, float, complex, byte, short, xxx_vector, ...--></type>
-  </source>
+  <doc>
+      Abosrbs messages and store the cdr as a vector
+      like the block_vector_sink.
+  </doc>
 </block>

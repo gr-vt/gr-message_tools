@@ -22,6 +22,8 @@
 #define INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_IMPL_H
 
 #include <message_file/msg_vector_sink.h>
+#include <gnuradio/thread/thread.h>
+#include <pmt/pmt.h>
 
 namespace gr {
   namespace message_file {
@@ -29,16 +31,23 @@ namespace gr {
     class msg_vector_sink_impl : public msg_vector_sink
     {
      private:
-      // Nothing to declare in this block.
+      std::vector<uint8_t> d_data;
+      std::vector<tag_t> d_tags;
+      int d_vlen;
+
+      void print_pdu(pmt::pmt_t pdu);
+
+      gr::thread::mutex d_mutex;
+      std::vector<pmt::pmt_t> d_messages;
 
      public:
-      msg_vector_sink_impl();
+      msg_vector_sink_impl(int vlen);
       ~msg_vector_sink_impl();
 
-      // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
+      void reset() { d_data.clear(); }
+      std::vector<uint8_t> data() const;
+      std::vector<tag_t> tags() const;
+      int num_messages();
     };
 
   } // namespace message_file
