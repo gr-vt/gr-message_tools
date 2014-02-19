@@ -29,6 +29,7 @@ list(APPEND message_file_sources
     message_file_sink_impl.cc
     message_strobe_source_impl.cc
     msg_vector_strobe_impl.cc
+    msg_vector_sink_impl.cc
 )
 
 add_library(gnuradio-message_file SHARED ${message_file_sources})

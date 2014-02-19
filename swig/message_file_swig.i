@@ -11,6 +11,7 @@
 #include "message_file/message_file_sink.h"
 #include "message_file/message_strobe_source.h"
 #include "message_file/msg_vector_strobe.h"
+#include "message_file/msg_vector_sink.h"
 %}
 
 
@@ -20,3 +21,5 @@ GR_SWIG_BLOCK_MAGIC2(message_file, message_file_sink);
 GR_SWIG_BLOCK_MAGIC2(message_file, message_strobe_source);
 %include "message_file/msg_vector_strobe.h"
 GR_SWIG_BLOCK_MAGIC2(message_file, msg_vector_strobe);
+%include "message_file/msg_vector_sink.h"
+GR_SWIG_BLOCK_MAGIC2(message_file, msg_vector_sink);
