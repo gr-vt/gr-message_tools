@@ -2,8 +2,18 @@
 ##################################################
 # Gnuradio Python Flow Graph
 # Title: Top Block
-# Generated: Tue Feb 11 12:45:08 2014
+# Generated: Mon Mar 30 13:39:44 2015
 ##################################################
+
+if __name__ == '__main__':
+    import ctypes
+    import sys
+    if sys.platform.startswith('linux'):
+        try:
+            x11 = ctypes.cdll.LoadLibrary('libX11.so')
+            x11.XInitThreads()
+        except:
+            print "Warning: failed to XInitThreads()"
 
 from gnuradio import eng_notation
 from gnuradio import gr
@@ -33,11 +43,10 @@ class top_block(grc_wxgui.top_block_gui):
         self.message_tools_message_file_sink_0.set_unbuffered(False)
 
         ##################################################
-        # Asynch Message Connections
+        # Connections
         ##################################################
-        self.msg_connect(self.message_tools_message_strobe_source_0, "strobe", self.message_tools_message_file_sink_0, "print_pdu")
+        self.msg_connect((self.message_tools_message_strobe_source_0, 'strobe'), (self.message_tools_message_file_sink_0, 'print_pdu'))    
 
-# QT sink close method reimplementation
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -45,18 +54,10 @@ class top_block(grc_wxgui.top_block_gui):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
 
+
 if __name__ == '__main__':
-    import ctypes
-    import os
-    if os.name == 'posix':
-        try:
-            x11 = ctypes.cdll.LoadLibrary('libX11.so')
-            x11.XInitThreads()
-        except:
-            print "Warning: failed to XInitThreads()"
     parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
     (options, args) = parser.parse_args()
     tb = top_block()
     tb.Start(True)
     tb.Wait()
-
