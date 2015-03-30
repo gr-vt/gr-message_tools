@@ -18,16 +18,16 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_IMPL_H
-#define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_IMPL_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_IMPL_H
+#define INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_IMPL_H
 
-#include <message_file/message_file_sink.h>
+#include <message_tools/message_file_sink.h>
 #include <gnuradio/block.h>
 #include <gnuradio/thread/thread.h>
 #include <pmt/pmt.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     class message_file_sink_impl : public message_file_sink
     {
@@ -53,8 +53,8 @@ namespace gr {
       void set_unbuffered(bool unbuffered){ blocks::file_sink_base::set_unbuffered(unbuffered); }
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_IMPL_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_IMPL_H */
 

@@ -18,15 +18,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_IMPL_H
-#define INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_IMPL_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_IMPL_H
+#define INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_IMPL_H
 
-#include <message_file/msg_vector_sink.h>
+#include <message_tools/msg_vector_sink.h>
 #include <gnuradio/thread/thread.h>
 #include <pmt/pmt.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     class msg_vector_sink_impl : public msg_vector_sink
     {
@@ -50,8 +50,8 @@ namespace gr {
       int num_messages();
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_IMPL_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_IMPL_H */
 

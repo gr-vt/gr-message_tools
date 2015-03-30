@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     msg_vector_sink::sptr
     msg_vector_sink::make(int vlen)
@@ -103,6 +103,6 @@ namespace gr {
       return d_tags;
     }
 
-  } /* namespace message_file */
+  } /* namespace message_tools */
 } /* namespace gr */
 

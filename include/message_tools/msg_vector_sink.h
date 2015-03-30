@@ -19,16 +19,16 @@
  */
 
 
-#ifndef INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_H
-#define INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_H
+#define INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_H
 
-#include <message_file/api.h>
+#include <message_tools/api.h>
 #include <gnuradio/block.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
-    class MESSAGE_FILE_API msg_vector_sink : virtual public gr::block
+    class MESSAGE_TOOLS_API msg_vector_sink : virtual public gr::block
     {
      public:
       typedef boost::shared_ptr<msg_vector_sink> sptr;
@@ -41,8 +41,8 @@ namespace gr {
       virtual int num_messages() = 0;
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MSG_VECTOR_SINK_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MSG_VECTOR_SINK_H */
 

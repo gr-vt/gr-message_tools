@@ -19,21 +19,21 @@
  */
 
 
-#ifndef INCLUDED_MESSAGE_FILE_MSG_VECTOR_STROBE_H
-#define INCLUDED_MESSAGE_FILE_MSG_VECTOR_STROBE_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H
+#define INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H
 
-#include <message_file/api.h>
+#include <message_tools/api.h>
 #include <gnuradio/block.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
-    class MESSAGE_FILE_API msg_vector_strobe : virtual public gr::block
+    class MESSAGE_TOOLS_API message_strobe_source : virtual public block
     {
      public:
-      typedef boost::shared_ptr<msg_vector_strobe> sptr;
+      typedef boost::shared_ptr<message_strobe_source> sptr;
 
-      static sptr make(float high_ms, float low_ms, const std::vector<uint8_t> &msg_vector);
+      static sptr make(float high_ms, float low_ms, const char* filename, bool repeat=true);
 
       virtual void set_highP(float high_ms) = 0;
 
@@ -41,13 +41,15 @@ namespace gr {
 
       virtual float period() const = 0;
 
-      virtual void set_msg_vec(const std::vector<uint8_t> &nmv) = 0;
+      virtual bool seek(long seek_point, int whence) = 0;
 
-      virtual pmt::pmt_t msg() const = 0;
+      virtual void open(const char *filename, bool repeat) = 0;
+
+      virtual void close() = 0;
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MSG_VECTOR_STROBE_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H */
 

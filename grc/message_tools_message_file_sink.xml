@@ -6,10 +6,10 @@
  -->
 <block>
   <name>Message File Sink</name>
-  <key>message_file_message_file_sink</key>
-  <category>message_file</category>
-  <import>import message_file</import>
-  <make>message_file.message_file_sink($filename,$append)
+  <key>message_tools_message_file_sink</key>
+  <category>Message Tools</category>
+  <import>import message_tools</import>
+  <make>message_tools.message_file_sink($filename,$append)
 self.$(id).set_unbuffered($unbuffered)</make>
 	<callback>set_unbuffered($unbuffered)</callback>
 	<callback>open($filename)</callback>

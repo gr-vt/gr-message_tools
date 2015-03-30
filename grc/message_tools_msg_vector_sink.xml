@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <block>
   <name>Message Vector Sink</name>
-  <key>message_file_msg_vector_sink</key>
-  <category>message_file</category>
-  <import>import message_file</import>
-  <make>message_file.msg_vector_sink($vlen)</make>
+  <key>message_tools_msg_vector_sink</key>
+  <category>Message Tools</category>
+  <import>import message_tools</import>
+  <make>message_tools.msg_vector_sink($vlen)</make>
 
 	<param>
 		<name>Vec Length</name>

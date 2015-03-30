@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <block>
   <name>Message Strobe Source</name>
-  <key>message_file_message_strobe_source</key>
-  <category>message_file</category>
-  <import>import message_file</import>
+  <key>message_tools_message_strobe_source</key>
+  <category>Message Tools</category>
+  <import>import message_tools</import>
 	<import>import pmt</import>
-  <make>message_file.message_strobe_source($high, $low, $file, $repeat)</make>
+  <make>message_tools.message_strobe_source($high, $low, $file, $repeat)</make>
     <callback>set_highP($high)</callback>
     <callback>set_lowP($low)</callback>
     <callback>open($file,$repeat)</callback>

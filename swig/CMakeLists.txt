@@ -35,23 +35,23 @@ foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
     list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
 endforeach(incdir)
 
-set(GR_SWIG_LIBRARIES gnuradio-message_file)
-set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/message_file_swig_doc.i)
+set(GR_SWIG_LIBRARIES gnuradio-message_tools)
+set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/message_tools_swig_doc.i)
 set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
-GR_SWIG_MAKE(message_file_swig message_file_swig.i)
+GR_SWIG_MAKE(message_tools_swig message_tools_swig.i)
 
 ########################################################################
 # Install the build swig module
 ########################################################################
-GR_SWIG_INSTALL(TARGETS message_file_swig DESTINATION ${GR_PYTHON_DIR}/message_file)
+GR_SWIG_INSTALL(TARGETS message_tools_swig DESTINATION ${GR_PYTHON_DIR}/message_tools)
 
 ########################################################################
 # Install swig .i files for development
 ########################################################################
 install(
     FILES
-    message_file_swig.i
-    ${CMAKE_CURRENT_BINARY_DIR}/message_file_swig_doc.i
-    DESTINATION ${GR_INCLUDE_DIR}/message_file/swig
+    message_tools_swig.i
+    ${CMAKE_CURRENT_BINARY_DIR}/message_tools_swig_doc.i
+    DESTINATION ${GR_INCLUDE_DIR}/message_tools/swig
 )

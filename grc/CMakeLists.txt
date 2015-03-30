@@ -18,8 +18,8 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    message_file_message_file_sink.xml
-    message_file_message_strobe_source.xml
-    message_file_msg_vector_strobe.xml
-    message_file_msg_vector_sink.xml DESTINATION share/gnuradio/grc/blocks
+    message_tools_message_file_sink.xml
+    message_tools_message_strobe_source.xml
+    message_tools_msg_vector_strobe.xml
+    message_tools_msg_vector_sink.xml DESTINATION share/gnuradio/grc/blocks
 )

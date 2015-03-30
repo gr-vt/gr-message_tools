@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_MESSAGE_TOOLS message_tools)
+
+FIND_PATH(
+    MESSAGE_TOOLS_INCLUDE_DIRS
+    NAMES message_tools/api.h
+    HINTS $ENV{MESSAGE_TOOLS_DIR}/include
+        ${PC_MESSAGE_TOOLS_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    MESSAGE_TOOLS_LIBRARIES
+    NAMES gnuradio-message_tools
+    HINTS $ENV{MESSAGE_TOOLS_DIR}/lib
+        ${PC_MESSAGE_TOOLS_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(MESSAGE_TOOLS DEFAULT_MSG MESSAGE_TOOLS_LIBRARIES MESSAGE_TOOLS_INCLUDE_DIRS)
+MARK_AS_ADVANCED(MESSAGE_TOOLS_LIBRARIES MESSAGE_TOOLS_INCLUDE_DIRS)
+

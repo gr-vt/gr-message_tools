@@ -19,15 +19,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_MESSAGE_FILE_API_H
-#define INCLUDED_MESSAGE_FILE_API_H
+#ifndef INCLUDED_MESSAGE_TOOLS_API_H
+#define INCLUDED_MESSAGE_TOOLS_API_H
 
 #include <gnuradio/attributes.h>
 
-#ifdef gnuradio_message_file_EXPORTS
-#  define MESSAGE_FILE_API __GR_ATTR_EXPORT
+#ifdef gnuradio_message_tools_EXPORTS
+#  define MESSAGE_TOOLS_API __GR_ATTR_EXPORT
 #else
-#  define MESSAGE_FILE_API __GR_ATTR_IMPORT
+#  define MESSAGE_TOOLS_API __GR_ATTR_IMPORT
 #endif
 
-#endif /* INCLUDED_MESSAGE_FILE_API_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_API_H */

@@ -19,17 +19,17 @@
  */
 
 
-#ifndef INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H
-#define INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_H
+#define INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_H
 
-#include <message_file/api.h>
+#include <message_tools/api.h>
 #include <gnuradio/block.h>
 #include <gnuradio/blocks/file_sink_base.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
-    class MESSAGE_FILE_API message_file_sink : virtual public block,
+    class MESSAGE_TOOLS_API message_file_sink : virtual public block,
                                                virtual public blocks::file_sink_base
     {
      public:
@@ -44,8 +44,8 @@ namespace gr {
       virtual void set_unbuffered(bool unbuffered) = 0;
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MESSAGE_FILE_SINK_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MESSAGE_FILE_SINK_H */
 

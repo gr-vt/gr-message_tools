@@ -18,15 +18,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_MESSAGE_FILE_MESSAGE_STROBE_SOURCE_IMPL_H
-#define INCLUDED_MESSAGE_FILE_MESSAGE_STROBE_SOURCE_IMPL_H
+#ifndef INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_IMPL_H
+#define INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_IMPL_H
 
-#include <message_file/message_strobe_source.h>
+#include <message_tools/message_strobe_source.h>
 #include <boost/thread/mutex.hpp>
 #include <stdio.h>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     class message_strobe_source_impl : public message_strobe_source
     {
@@ -70,8 +70,8 @@ namespace gr {
       void close();
     };
 
-  } // namespace message_file
+  } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_FILE_MESSAGE_STROBE_SOURCE_IMPL_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_IMPL_H */
 

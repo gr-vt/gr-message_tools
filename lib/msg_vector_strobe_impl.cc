@@ -31,7 +31,7 @@
 #include <stdexcept>
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     msg_vector_strobe::sptr
     msg_vector_strobe::make(float high_ms, float low_ms, const std::vector<uint8_t> &msg_vector)
@@ -104,6 +104,6 @@ namespace gr {
       d_period_ms = (d_high_ms - d_low_ms) * temp + d_low_ms;
     }
 
-  } /* namespace message_file */
+  } /* namespace message_tools */
 } /* namespace gr */
 

@@ -19,7 +19,7 @@
 # The presence of this file turns this directory into a Python package
 
 '''
-This is the GNU Radio MESSAGE_FILE module. Place your Python package
+This is the GNU Radio MESSAGE_TOOLS module. Place your Python package
 description here (python/__init__.py).
 '''
 
@@ -41,8 +41,8 @@ if _RTLD_GLOBAL != 0:
 # ----------------------------------------------------------------
 
 
-# import swig generated symbols into the message_file namespace
-from message_file_swig import *
+# import swig generated symbols into the message_tools namespace
+from message_tools_swig import *
 
 # import any pure python here
 #

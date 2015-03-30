@@ -11,7 +11,7 @@ from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
-import message_file
+import message_tools
 import pmt
 import wx
 
@@ -28,14 +28,14 @@ class top_block(grc_wxgui.top_block_gui):
         ##################################################
         # Blocks
         ##################################################
-        self.message_file_message_strobe_source_0 = message_file.message_strobe_source(10, 50, "/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_format.dat", False)
-        self.message_file_message_file_sink_0 = message_file.message_file_sink("/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_out.dat",False)
-        self.message_file_message_file_sink_0.set_unbuffered(False)
+        self.message_tools_message_strobe_source_0 = message_tools.message_strobe_source(10, 50, "msg_file_format.dat", False)
+        self.message_tools_message_file_sink_0 = message_tools.message_file_sink("msg_file_out.dat",False)
+        self.message_tools_message_file_sink_0.set_unbuffered(False)
 
         ##################################################
         # Asynch Message Connections
         ##################################################
-        self.msg_connect(self.message_file_message_strobe_source_0, "strobe", self.message_file_message_file_sink_0, "print_pdu")
+        self.msg_connect(self.message_tools_message_strobe_source_0, "strobe", self.message_tools_message_file_sink_0, "print_pdu")
 
 # QT sink close method reimplementation
 

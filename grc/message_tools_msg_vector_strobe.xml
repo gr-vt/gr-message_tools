@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <block>
   <name>Message Vector Strobe</name>
-  <key>message_file_msg_vector_strobe</key>
-  <category>message_file</category>
-  <import>import message_file</import>
-  <make>message_file.msg_vector_strobe($high, $low, $msg_vector)</make>
+  <key>message_tools_msg_vector_strobe</key>
+  <category>Message Tools</category>
+  <import>import message_tools</import>
+  <make>message_tools.msg_vector_strobe($high, $low, $msg_vector)</make>
     <callback>set_highP($high)</callback>
     <callback>set_lowP($low)</callback>
     <callback>set_msg_vec($msg_vector)</callback>

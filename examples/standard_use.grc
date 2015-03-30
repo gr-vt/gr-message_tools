@@ -84,10 +84,10 @@
     </param>
   </block>
   <block>
-    <key>message_file_message_strobe_source</key>
+    <key>message_tools_message_strobe_source</key>
     <param>
       <key>id</key>
-      <value>message_file_message_strobe_source_0</value>
+      <value>message_tools_message_strobe_source_0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -95,7 +95,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_format.dat</value>
+      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_tools/examples/msg_file_format.dat</value>
     </param>
     <param>
       <key>repeat</key>
@@ -131,10 +131,10 @@
     </param>
   </block>
   <block>
-    <key>message_file_message_file_sink</key>
+    <key>message_tools_message_file_sink</key>
     <param>
       <key>id</key>
-      <value>message_file_message_file_sink_0</value>
+      <value>message_tools_message_file_sink_0</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -142,7 +142,7 @@
     </param>
     <param>
       <key>filename</key>
-      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_file/examples/msg_file_out.dat</value>
+      <value>/home/clark/workspace/2014-02-10/pybombs/src/gr-message_tools/examples/msg_file_out.dat</value>
     </param>
     <param>
       <key>unbuffered</key>
@@ -166,8 +166,8 @@
     </param>
   </block>
   <connection>
-    <source_block_id>message_file_message_strobe_source_0</source_block_id>
-    <sink_block_id>message_file_message_file_sink_0</sink_block_id>
+    <source_block_id>message_tools_message_strobe_source_0</source_block_id>
+    <sink_block_id>message_tools_message_file_sink_0</sink_block_id>
     <source_key>strobe</source_key>
     <sink_key>print_pdu</sink_key>
   </connection>

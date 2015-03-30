@@ -25,19 +25,19 @@ include(GrPlatform) #define LIB_SUFFIX
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
-list(APPEND message_file_sources
+list(APPEND message_tools_sources
     message_file_sink_impl.cc
     message_strobe_source_impl.cc
     msg_vector_strobe_impl.cc
     msg_vector_sink_impl.cc
 )
 
-add_library(gnuradio-message_file SHARED ${message_file_sources})
-target_link_libraries(gnuradio-message_file ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES})
-set_target_properties(gnuradio-message_file PROPERTIES DEFINE_SYMBOL "gnuradio_message_file_EXPORTS")
+add_library(gnuradio-message_tools SHARED ${message_tools_sources})
+target_link_libraries(gnuradio-message_tools ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES})
+set_target_properties(gnuradio-message_tools PROPERTIES DEFINE_SYMBOL "gnuradio_message_tools_EXPORTS")
 
 if(APPLE)
-    set_target_properties(gnuradio-message_file PROPERTIES
+    set_target_properties(gnuradio-message_tools PROPERTIES
         INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
     )
 endif(APPLE)
@@ -45,7 +45,7 @@ endif(APPLE)
 ########################################################################
 # Install built library files
 ########################################################################
-install(TARGETS gnuradio-message_file
+install(TARGETS gnuradio-message_tools
     LIBRARY DESTINATION lib${LIB_SUFFIX} # .so/.dylib file
     ARCHIVE DESTINATION lib${LIB_SUFFIX} # .lib file
     RUNTIME DESTINATION bin              # .dll file
@@ -58,19 +58,19 @@ include(GrTest)
 
 include_directories(${CPPUNIT_INCLUDE_DIRS})
 
-list(APPEND test_message_file_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_message_file.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_message_file.cc
+list(APPEND test_message_tools_sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/test_message_tools.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_message_tools.cc
 )
 
-add_executable(test-message_file ${test_message_file_sources})
+add_executable(test-message_tools ${test_message_tools_sources})
 
 target_link_libraries(
-  test-message_file
+  test-message_tools
   ${GNURADIO_RUNTIME_LIBRARIES}
   ${Boost_LIBRARIES}
   ${CPPUNIT_LIBRARIES}
-  gnuradio-message_file
+  gnuradio-message_tools
 )
 
-GR_ADD_TEST(test_message_file test-message_file)
+GR_ADD_TEST(test_message_tools test-message_tools)

@@ -25,5 +25,5 @@ install(FILES
     message_file_sink.h
     message_strobe_source.h
     msg_vector_strobe.h
-    msg_vector_sink.h DESTINATION include/message_file
+    msg_vector_sink.h DESTINATION include/message_tools
 )

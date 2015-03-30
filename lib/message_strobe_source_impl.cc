@@ -45,7 +45,7 @@
 #endif
 
 namespace gr {
-  namespace message_file {
+  namespace message_tools {
 
     message_strobe_source::sptr
     message_strobe_source::make(float high_ms, float low_ms, const char* filename, bool repeat)
@@ -233,6 +233,6 @@ namespace gr {
       d_period_ms = (d_high_ms - d_low_ms) * temp + d_low_ms;
     }
 
-  } /* namespace message_file */
+  } /* namespace message_tools */
 } /* namespace gr */
 
