@@ -1,0 +1,9 @@
+This is a OOTM to help with simple debugging with the PMT messages.
+
+Primary focus has been looking at uint8_t vectors and meta data.
+
+:::For the message source text file (this is only passing the vector):::
+FORMAT SPECS:
+
+(hex byte(2 text characters ex: 0f))(space)(hex byte(2 text))(space)(...repeat)(\n - end of message)
+(hex byte(2 text characters ex: c9))(space)(hex byte(2 text))(space)(...repeat)(\n - end of message)
