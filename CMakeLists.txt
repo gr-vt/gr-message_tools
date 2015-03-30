@@ -22,7 +22,7 @@
 # Project setup
 ########################################################################
 cmake_minimum_required(VERSION 2.6)
-project(gr-message_file CXX C)
+project(gr-message_tools CXX C)
 enable_testing()
 
 #select the release build type by default to get optimization flags
@@ -60,7 +60,7 @@ set(Boost_ADDITIONAL_VERSIONS
 find_package(Boost "1.35" COMPONENTS filesystem system)
 
 if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Boost required to compile message_file")
+    message(FATAL_ERROR "Boost required to compile message_tools")
 endif()
 
 ########################################################################
@@ -69,7 +69,7 @@ endif()
 include(GrPlatform) #define LIB_SUFFIX
 set(GR_RUNTIME_DIR      bin)
 set(GR_LIBRARY_DIR      lib${LIB_SUFFIX})
-set(GR_INCLUDE_DIR      include/message_file)
+set(GR_INCLUDE_DIR      include/message_tools)
 set(GR_DATA_DIR         share)
 set(GR_PKG_DATA_DIR     ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME})
 set(GR_DOC_DIR          ${GR_DATA_DIR}/doc)
@@ -94,7 +94,7 @@ set(GR_REQUIRED_COMPONENTS RUNTIME BLOCKS PMT)
 find_package(Gnuradio "3.7.2" REQUIRED)
 
 if(NOT CPPUNIT_FOUND)
-    message(FATAL_ERROR "CppUnit required to compile message_file")
+    message(FATAL_ERROR "CppUnit required to compile message_tools")
 endif()
 
 ########################################################################
@@ -117,8 +117,8 @@ link_directories(
 )
 
 # Set component parameters
-set(GR_MESSAGE_FILE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
-set(GR_MESSAGE_FILE_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
+set(GR_MESSAGE_TOOLS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
+set(GR_MESSAGE_TOOLS_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
 
 ########################################################################
 # Create uninstall target
@@ -135,7 +135,7 @@ add_custom_target(uninstall
 ########################################################################
 # Add subdirectories
 ########################################################################
-add_subdirectory(include/message_file)
+add_subdirectory(include/message_tools)
 add_subdirectory(lib)
 add_subdirectory(swig)
 add_subdirectory(python)
@@ -146,6 +146,6 @@ add_subdirectory(docs)
 ########################################################################
 # Install cmake search helper for this library
 ########################################################################
-install(FILES cmake/Modules/message_fileConfig.cmake        
-    DESTINATION lib/cmake/message_file
+install(FILES cmake/Modules/message_toolsConfig.cmake        
+    DESTINATION lib/cmake/message_tools
 )
