@@ -28,7 +28,7 @@
       <key>1</key>
     </option>
     <option>
-      <name>Complex Data</name>
+      <name>Raw Data</name>
       <key>2</key>
     </option>
   </param>
@@ -39,6 +39,14 @@
     <option>
       <name>Bit Vector</name>
       <key>0</key>
+    </option>
+    <option>
+      <name>Complex</name>
+      <key>1</key>
+    </option>
+    <option>
+      <name>Byte</name>
+      <key>2</key>
     </option>
   </param>
   <param>

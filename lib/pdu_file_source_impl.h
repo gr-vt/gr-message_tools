@@ -84,6 +84,7 @@ namespace gr {
       bool d_loading;
 
       long d_items_per_pdu;
+      size_t d_items_size;
 
      public:
       pdu_file_source_impl(const char* filename, int fileStruct=0, int dataType=0, float delay=1000., int maxSend=0, long itemCount=0);

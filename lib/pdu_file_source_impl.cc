@@ -90,6 +90,18 @@ namespace gr {
       message_port_register_out(pmt::mp("msg"));
       d_thread = boost::shared_ptr<boost::thread>
         (new boost::thread(boost::bind(&pdu_file_source_impl::run, this)));
+
+      if(d_fileType == 2){
+        if(d_dataType == 1)
+          d_items_size = sizeof(gr_complex);
+        else if(d_dataType == 2)
+          d_items_size = sizeof(char);
+        else{
+          char err[100];
+          sprintf(err, "Datatype %d (Bit Vector) not Compatible with Filetype 2 (Raw Data)", d_dataType);
+          throw std::runtime_error(err);
+        }
+      }
     }
 
     /*
@@ -130,11 +142,11 @@ namespace gr {
 //      printf("GETTING MESSAGE\n");
       switch(d_fileType){
         case 2:{
-          long byte_count = sizeof(gr_complex)*d_items_per_pdu;
+          long byte_count = d_items_size*d_items_per_pdu;
 //          printf("I want %ld items (%ld bytes)\n",d_items_per_pdu, byte_count);
           char line[byte_count];
-          size_t i = fread(line,sizeof(gr_complex),d_items_per_pdu, (FILE*)d_fp);
-//          printf("I read %ld items (%ld bytes)\n",i,i*sizeof(gr_complex));
+          size_t i = fread(line,d_items_size,d_items_per_pdu, (FILE*)d_fp);
+//          printf("I read %ld items (%ld bytes)\n",i,i*d_items_size);
           if( i == 0 ){
             //end of file or error?
             if(d_repeat){
@@ -148,7 +160,7 @@ namespace gr {
             }
           }
           else{
-            std::string pdu_line(line,i*sizeof(gr_complex));
+            std::string pdu_line(line,i*d_items_size);
 //            printf("The string is");
 //            for(int ii = 0; ii < pdu_line.length(); ii++){
 //              printf(" %02x",(unsigned int)pdu_line[ii]);
@@ -281,19 +293,26 @@ namespace gr {
         }
         case 2://Complex data
         {
-          long byte_count = sizeof(gr_complex)*d_items_per_pdu;
+          long byte_count = d_items_size*d_items_per_pdu;
 //          printf("Should be receiving %ld items (%ld bytes)\n",d_items_per_pdu,byte_count);
           long read_count = line.length();
-//          printf("Received %ld items (%ld bytes)\n",read_count/sizeof(gr_complex),read_count);
-          gr_complex* data = (gr_complex*)line.c_str();
+          long items_count = read_count/d_items_size;
+//          printf("Received %ld items (%ld bytes)\n",items_count,read_count);
+          uint8_t* data = (uint8_t*)line.c_str();
 //          printf("Complex data is:");
-//          for(int ii = 0; ii < read_count/sizeof(gr_complex); ii++){
+//          for(int ii = 0; ii < items_count; ii++){
 //            printf(" (%f,%f)",data[ii].real(),data[ii].imag());
 //          }
 //          printf("\n");
-          //pmt::pmt_t meta = pmt::cons(pmt::intern("packet_len"),pmt::from_long(read_count/sizeof(gr_complex)));
+          //pmt::pmt_t meta = pmt::cons(pmt::intern("packet_len"),pmt::from_long(items_count));
           pmt::pmt_t meta = pmt::PMT_NIL;
-          pmt::pmt_t data_vec = pmt::init_c32vector(read_count/sizeof(gr_complex),&data[0]);
+          pmt::pmt_t data_vec = pmt::PMT_NIL;
+          if(d_dataType == 1)
+            data_vec = pmt::init_c32vector(items_count,(gr_complex*) &data[0]);
+          else if(d_dataType == 2)
+            data_vec = pmt::init_u8vector(items_count,&data[0]);
+          else
+            throw std::runtime_error("Unknown data type, got past first check");
           d_msg = pmt::cons(meta,data_vec);
 //          printf("The message is:\n");
 //          print(d_msg);
