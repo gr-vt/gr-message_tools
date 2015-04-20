@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 <+YOU OR YOUR COMPANY+>.
+ * Copyright 2015 <+YOU OR YOUR COMPANY+>.
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H
-#define INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H
+#ifndef INCLUDED_MESSAGE_TOOLS_PDU_FILE_SOURCE_H
+#define INCLUDED_MESSAGE_TOOLS_PDU_FILE_SOURCE_H
 
 #include <message_tools/api.h>
 #include <gnuradio/block.h>
@@ -28,28 +28,29 @@
 namespace gr {
   namespace message_tools {
 
-    class MESSAGE_TOOLS_API message_strobe_source : virtual public block
+    /*!
+     * \brief <+description of block+>
+     * \ingroup message_tools
+     *
+     */
+    class MESSAGE_TOOLS_API pdu_file_source : virtual public gr::block
     {
      public:
-      typedef boost::shared_ptr<message_strobe_source> sptr;
+      typedef boost::shared_ptr<pdu_file_source> sptr;
 
-      static sptr make(const char* filename, float high_ms=1000., float low_ms=1000., bool repeat=false);
-
-      virtual void set_highP(float high_ms) = 0;
-
-      virtual void set_lowP(float low_ms) = 0;
-
-      virtual float period() const = 0;
-
-      virtual bool seek(long seek_point, int whence) = 0;
-
-      virtual void open(const char *filename, bool repeat) = 0;
-
-      virtual void close() = 0;
+      /*!
+       * \brief Return a shared_ptr to a new instance of message_tools::pdu_file_source.
+       *
+       * To avoid accidental use of raw pointers, message_tools::pdu_file_source's
+       * constructor is in a private implementation
+       * class. message_tools::pdu_file_source::make is the public interface for
+       * creating new instances.
+       */
+      static sptr make(const char* filename, int fileStruct=0, int dataType=0, float delay=1000., int maxSend=0, long itemCount=0);
     };
 
   } // namespace message_tools
 } // namespace gr
 
-#endif /* INCLUDED_MESSAGE_TOOLS_MESSAGE_STROBE_SOURCE_H */
+#endif /* INCLUDED_MESSAGE_TOOLS_PDU_FILE_SOURCE_H */
 

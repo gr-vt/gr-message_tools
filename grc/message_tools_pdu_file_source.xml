@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<block>
+  <name>PDU File Source</name>
+  <key>message_tools_pdu_file_source</key>
+  <category>Message Tools</category>
+  <import>import message_tools</import>
+	<import>import pmt</import>
+  <make>message_tools.pdu_file_source($filename, $fileStruct, $dataType, $delay, $maxSend, $itemCount)</make>
+    <callback>set_delay($delay)</callback>
+    <callback>set_maxCount($maxSend)</callback>
+  
+  <param>
+    <name>Source File</name>
+    <key>filename</key>
+		<value></value>
+		<type>file_open</type>
+  </param>
+  <param>
+    <name>File Type</name>
+    <key>fileStruct</key>
+    <type>enum</type>
+    <option>
+      <name>Comma-Period</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>PMT Generic</name>
+      <key>1</key>
+    </option>
+    <option>
+      <name>Raw Data</name>
+      <key>2</key>
+    </option>
+  </param>
+  <param>
+    <name>Data Type</name>
+    <key>dataType</key>
+    <type>enum</type>
+    <option>
+      <name>Bit Vector</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>Complex</name>
+      <key>1</key>
+    </option>
+    <option>
+      <name>Byte</name>
+      <key>2</key>
+    </option>
+  </param>
+  <param>
+    <name>PDU Delay (ms)</name>
+    <key>delay</key>
+    <value>1000</value>
+    <type>real</type>
+  </param>
+  <param>
+    <name>Max Number of PDUS</name>
+    <key>maxSend</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Items per PDU</name>
+    <key>itemCount</key>
+    <value>0</value>
+    <type>int</type>
+    <hide>part</hide>
+  </param>
+  
+  
+  
+  <source>
+    <name>msg</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+  
+  
+  
+  <doc>
+    This will read a source file according to 'File Type'
+    It will then convert everything except the Data flag as a dictionary.
+    Data will be processed according to the 'Data Type'
+    
+    PDU Delay is the time between successive pdus.
+    Max Number of PDUs is the max number of pdus that will be generated.
+      If 0, it will run through the file once.
+      If negative, it will run until user exits.
+  </doc>
+  
+</block>

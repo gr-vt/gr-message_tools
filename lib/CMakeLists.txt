@@ -30,6 +30,7 @@ list(APPEND message_tools_sources
     message_strobe_source_impl.cc
     msg_vector_strobe_impl.cc
     msg_vector_sink_impl.cc
+    pdu_file_source_impl.cc
 )
 
 add_library(gnuradio-message_tools SHARED ${message_tools_sources})

@@ -12,6 +12,7 @@
 #include "message_tools/message_strobe_source.h"
 #include "message_tools/msg_vector_strobe.h"
 #include "message_tools/msg_vector_sink.h"
+#include "message_tools/pdu_file_source.h"
 %}
 
 
@@ -23,3 +24,5 @@ GR_SWIG_BLOCK_MAGIC2(message_tools, message_strobe_source);
 GR_SWIG_BLOCK_MAGIC2(message_tools, msg_vector_strobe);
 %include "message_tools/msg_vector_sink.h"
 GR_SWIG_BLOCK_MAGIC2(message_tools, msg_vector_sink);
+%include "message_tools/pdu_file_source.h"
+GR_SWIG_BLOCK_MAGIC2(message_tools, pdu_file_source);

@@ -5,7 +5,7 @@
   <category>Message Tools</category>
   <import>import message_tools</import>
 	<import>import pmt</import>
-  <make>message_tools.message_strobe_source($high, $low, $file, $repeat)</make>
+  <make>message_tools.message_strobe_source($file, $high, $low, $repeat)</make>
     <callback>set_highP($high)</callback>
     <callback>set_lowP($low)</callback>
     <callback>open($file,$repeat)</callback>
@@ -18,7 +18,7 @@
 	<param>
 		<name>Repeat</name>
 		<key>repeat</key>
-		<value>True</value>
+		<value>False</value>
 		<type>enum</type>
 		<option>
 			<name>Yes</name>
