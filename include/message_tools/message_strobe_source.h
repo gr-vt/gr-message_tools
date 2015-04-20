@@ -33,7 +33,7 @@ namespace gr {
      public:
       typedef boost::shared_ptr<message_strobe_source> sptr;
 
-      static sptr make(float high_ms, float low_ms, const char* filename, bool repeat=true);
+      static sptr make(const char* filename, float high_ms=1000., float low_ms=1000., bool repeat=false);
 
       virtual void set_highP(float high_ms) = 0;
 

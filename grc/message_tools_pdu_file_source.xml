@@ -5,7 +5,7 @@
   <category>Message Tools</category>
   <import>import message_tools</import>
 	<import>import pmt</import>
-  <make>message_tools.pdu_file_source($filename, $fileStruct, $dataType, $delay, $maxSend)</make>
+  <make>message_tools.pdu_file_source($filename, $fileStruct, $dataType, $delay, $maxSend, $itemCount)</make>
     <callback>set_delay($delay)</callback>
     <callback>set_maxCount($maxSend)</callback>
   
@@ -26,6 +26,10 @@
     <option>
       <name>PMT Generic</name>
       <key>1</key>
+    </option>
+    <option>
+      <name>Complex Data</name>
+      <key>2</key>
     </option>
   </param>
   <param>
@@ -48,6 +52,13 @@
     <key>maxSend</key>
     <value>0</value>
     <type>int</type>
+  </param>
+  <param>
+    <name>Items per PDU</name>
+    <key>itemCount</key>
+    <value>0</value>
+    <type>int</type>
+    <hide>part</hide>
   </param>
   
   

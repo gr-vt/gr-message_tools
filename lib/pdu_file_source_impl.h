@@ -40,11 +40,12 @@ namespace gr {
       bool d_repeat;
       bool d_updated;
       boost::mutex fp_mutex;
+      fpos_t d_pos_start;
       fpos_t d_pos;
       fpos_t d_pos_end;
 
       void do_update();
-      
+
       boost::shared_ptr<boost::thread> d_thread;
       bool d_finished;
       float d_delay_ms;
@@ -53,13 +54,13 @@ namespace gr {
 
       void run();
       void get_msg();
-      
+
       int d_fileType;
       int d_dataType;
-      
+
       std::vector<std::string> split(const std::string &s, char delim);
       std::vector<std::string> &split_helper(const std::string &s, char delim, std::vector<std::string> &elems);
-      
+
       void parse_line(std::string line);
       void parse(std::string chunk, pmt::pmt_t &holder);
       int identifyS(std::string chunk);
@@ -77,13 +78,15 @@ namespace gr {
       void dictS(std::string chunk, pmt::pmt_t &holder);
       void uniformS(std::string chunk, pmt::pmt_t &holder);
       uint8_t bitVal(std::string chunk);
-      
+
       std::vector<pmt::pmt_t> d_msg_list;
       size_t d_ml_pointer;
       bool d_loading;
 
+      long d_items_per_pdu;
+
      public:
-      pdu_file_source_impl(const char* filename, int fileStruct, int dataType, float delay, int maxSend);
+      pdu_file_source_impl(const char* filename, int fileStruct=0, int dataType=0, float delay=1000., int maxSend=0, long itemCount=0);
       ~pdu_file_source_impl();
 
       bool seek(long seek_point, int whence);

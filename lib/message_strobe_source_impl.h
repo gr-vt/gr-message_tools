@@ -58,7 +58,7 @@ namespace gr {
       void set_period();
 
      public:
-      message_strobe_source_impl(float high_ms, float low_ms, const char* filename, bool repeat);
+      message_strobe_source_impl(const char* filename, float high_ms=1000., float low_ms=1000., bool repeat=false);
       ~message_strobe_source_impl();
 
       void set_highP(float high_ms) { d_high_ms = high_ms; }

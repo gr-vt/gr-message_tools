@@ -56,16 +56,16 @@ namespace gr {
   namespace message_tools {
 
     pdu_file_source::sptr
-    pdu_file_source::make(const char* filename, int fileStruct, int dataType, float delay, int maxSend)
+    pdu_file_source::make(const char* filename, int fileStruct, int dataType, float delay, int maxSend, long itemCount)
     {
       return gnuradio::get_initial_sptr
-        (new pdu_file_source_impl(filename, fileStruct, dataType, delay, maxSend));
+        (new pdu_file_source_impl(filename, fileStruct, dataType, delay, maxSend, itemCount));
     }
 
     /*
      * The private constructor
      */
-    pdu_file_source_impl::pdu_file_source_impl(const char* filename, int fileStruct, int dataType, float delay, int maxSend)
+    pdu_file_source_impl::pdu_file_source_impl(const char* filename, int fileStruct, int dataType, float delay, int maxSend, long itemCount)
       : gr::block("pdu_file_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
@@ -75,6 +75,7 @@ namespace gr {
         d_delay_ms(delay),
         d_maxCount(maxSend),
         d_fileType(fileStruct),
+        d_items_per_pdu(itemCount),
         d_dataType(dataType),
         d_finished(false),
         d_loading(true),
@@ -116,6 +117,8 @@ namespace gr {
           throw std::runtime_error("work with file not open");
         
         get_msg();
+//          printf("The message is:\n");
+//          print(d_msg);
         message_port_pub(pmt::mp("msg"), d_msg);
         boost::this_thread::sleep(boost::posix_time::milliseconds(d_delay_ms));
       }
@@ -124,16 +127,54 @@ namespace gr {
     void
     pdu_file_source_impl::get_msg()
     {
-      char line[5000];
-      char* line_start;
-      line_start = fgets(line, 5000, (FILE*)d_fp);//THIS WILL CHANGE BASED ON FILETYPE----------------------------
-      if((line_start == NULL) && (d_repeat)){fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
-      else if((line_start == NULL) && (d_maxCount>0)) {fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
-      else if(line_start == NULL) {d_finished = true;}
-      else {
-        std::string pdu_line(line);
-        parse_line(pdu_line);
-        if(d_maxCount > 0) d_maxCount--;
+//      printf("GETTING MESSAGE\n");
+      switch(d_fileType){
+        case 2:{
+          long byte_count = sizeof(gr_complex)*d_items_per_pdu;
+//          printf("I want %ld items (%ld bytes)\n",d_items_per_pdu, byte_count);
+          char line[byte_count];
+          size_t i = fread(line,sizeof(gr_complex),d_items_per_pdu, (FILE*)d_fp);
+//          printf("I read %ld items (%ld bytes)\n",i,i*sizeof(gr_complex));
+          if( i == 0 ){
+            //end of file or error?
+            if(d_repeat){
+              fsetpos(d_fp, &d_pos);
+            }
+            else if(d_maxCount > 0){
+              fsetpos(d_fp, &d_pos);
+            }
+            else{
+              d_finished = true;
+            }
+          }
+          else{
+            std::string pdu_line(line,i*sizeof(gr_complex));
+//            printf("The string is");
+//            for(int ii = 0; ii < pdu_line.length(); ii++){
+//              printf(" %02x",(unsigned int)pdu_line[ii]);
+//            }
+//            printf("\n");
+            parse_line(pdu_line);
+            if(d_maxCount > 0) d_maxCount--;
+          }
+          break;
+        }
+        case 0:
+        case 1:
+        default:{
+          char line[5000];
+          char* line_start;
+          line_start = fgets(line, 5000, (FILE*)d_fp);//THIS WILL CHANGE BASED ON FILETYPE----------------------------
+          if((line_start == NULL) && (d_repeat)){fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
+          else if((line_start == NULL) && (d_maxCount>0)) {fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
+          else if(line_start == NULL) {d_finished = true;}
+          else {
+            std::string pdu_line(line);
+            parse_line(pdu_line);
+            if(d_maxCount > 0) d_maxCount--;
+          }
+          break;
+        }
       }
     }
 
@@ -211,6 +252,7 @@ namespace gr {
         fseek(d_fp, 0, SEEK_END);
         fgetpos(d_fp, &d_pos_end);
         fsetpos(d_fp, &d_pos);
+        d_pos_start = d_pos;
       }
     }
     
@@ -219,7 +261,7 @@ namespace gr {
     {
       //printf("parse starting, filetype = %d\n", d_fileType);
       switch(d_fileType){
-        case 1:
+        case 1://File is a comma seperated file
         {
           if(d_loading){
             //printf("Line = [%s]\n", line.c_str());
@@ -237,7 +279,27 @@ namespace gr {
           break;
           
         }
-        case 0:
+        case 2://Complex data
+        {
+          long byte_count = sizeof(gr_complex)*d_items_per_pdu;
+//          printf("Should be receiving %ld items (%ld bytes)\n",d_items_per_pdu,byte_count);
+          long read_count = line.length();
+//          printf("Received %ld items (%ld bytes)\n",read_count/sizeof(gr_complex),read_count);
+          gr_complex* data = (gr_complex*)line.c_str();
+//          printf("Complex data is:");
+//          for(int ii = 0; ii < read_count/sizeof(gr_complex); ii++){
+//            printf(" (%f,%f)",data[ii].real(),data[ii].imag());
+//          }
+//          printf("\n");
+          //pmt::pmt_t meta = pmt::cons(pmt::intern("packet_len"),pmt::from_long(read_count/sizeof(gr_complex)));
+          pmt::pmt_t meta = pmt::PMT_NIL;
+          pmt::pmt_t data_vec = pmt::init_c32vector(read_count/sizeof(gr_complex),&data[0]);
+          d_msg = pmt::cons(meta,data_vec);
+//          printf("The message is:\n");
+//          print(d_msg);
+          break;
+        }
+        case 0://This is the default, PMT Generic
         default:
         {
           std::vector<std::string> chunkedLine;

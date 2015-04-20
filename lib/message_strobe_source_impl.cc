@@ -48,13 +48,13 @@ namespace gr {
   namespace message_tools {
 
     message_strobe_source::sptr
-    message_strobe_source::make(float high_ms, float low_ms, const char* filename, bool repeat)
+    message_strobe_source::make(const char* filename, float high_ms, float low_ms, bool repeat)
     {
       return gnuradio::get_initial_sptr
-        (new message_strobe_source_impl(high_ms, low_ms, filename, repeat));
+        (new message_strobe_source_impl(filename, high_ms, low_ms, repeat));
     }
 
-    message_strobe_source_impl::message_strobe_source_impl(float high_ms, float low_ms, const char* filename, bool repeat)
+    message_strobe_source_impl::message_strobe_source_impl(const char* filename, float high_ms, float low_ms, bool repeat)
       : gr::block("message_strobe_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),

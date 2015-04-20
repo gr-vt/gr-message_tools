@@ -46,7 +46,7 @@ namespace gr {
        * class. message_tools::pdu_file_source::make is the public interface for
        * creating new instances.
        */
-      static sptr make(const char* filename, int fileStruct, int dataType, float delay, int maxSend);
+      static sptr make(const char* filename, int fileStruct=0, int dataType=0, float delay=1000., int maxSend=0, long itemCount=0);
     };
 
   } // namespace message_tools
