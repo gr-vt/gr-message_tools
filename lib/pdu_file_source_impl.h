@@ -53,7 +53,7 @@ namespace gr {
       pmt::pmt_t d_msg;
 
       void run();
-      void get_msg();
+      int get_msg();
 
       int d_fileType;
       int d_dataType;
