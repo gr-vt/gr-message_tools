@@ -99,6 +99,7 @@ namespace gr {
         else{
           char err[100];
           sprintf(err, "Datatype %d (Bit Vector) not Compatible with Filetype 2 (Raw Data)", d_dataType);
+          printf("RE:#1\n");
           throw std::runtime_error(err);
         }
       }
@@ -125,21 +126,28 @@ namespace gr {
       boost::this_thread::sleep(boost::posix_time::milliseconds(1));
       while(!d_finished) {
         do_update();       // update d_fp is reqd
-        if(d_fp == NULL)
+        if(d_fp == NULL){
+          printf("RE:#2\n");
           throw std::runtime_error("work with file not open");
+        }
         
-        get_msg();
+        int good_msg = get_msg();
+//        printf("Got message, is it good? %d\n",good_msg);
 //          printf("The message is:\n");
 //          print(d_msg);
-        message_port_pub(pmt::mp("msg"), d_msg);
-        boost::this_thread::sleep(boost::posix_time::milliseconds(d_delay_ms));
+        if(good_msg){
+          message_port_pub(pmt::mp("msg"), d_msg);
+          boost::this_thread::sleep(boost::posix_time::milliseconds(d_delay_ms));
+        }
       }
     }
     
-    void
+    int
     pdu_file_source_impl::get_msg()
     {
+      gr::thread::scoped_lock lock(fp_mutex);
 //      printf("GETTING MESSAGE\n");
+      int good_msg = 1;
       switch(d_fileType){
         case 2:{
           long byte_count = d_items_size*d_items_per_pdu;
@@ -151,12 +159,15 @@ namespace gr {
             //end of file or error?
             if(d_repeat){
               fsetpos(d_fp, &d_pos);
+              good_msg = 0;
             }
             else if(d_maxCount > 0){
               fsetpos(d_fp, &d_pos);
+              good_msg = 0;
             }
             else{
               d_finished = true;
+              good_msg = 0;
             }
           }
           else{
@@ -177,9 +188,9 @@ namespace gr {
           char line[5000];
           char* line_start;
           line_start = fgets(line, 5000, (FILE*)d_fp);//THIS WILL CHANGE BASED ON FILETYPE----------------------------
-          if((line_start == NULL) && (d_repeat)){fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
-          else if((line_start == NULL) && (d_maxCount>0)) {fsetpos(d_fp, &d_pos); d_loading=false; get_msg();}
-          else if(line_start == NULL) {d_finished = true;}
+          if((line_start == NULL) && (d_repeat)){fsetpos(d_fp, &d_pos); d_loading=false; good_msg = 0;}
+          else if((line_start == NULL) && (d_maxCount>0)) {fsetpos(d_fp, &d_pos); d_loading=false; good_msg = 0;}
+          else if(line_start == NULL) {d_finished = true; good_msg = 0;}
           else {
             std::string pdu_line(line);
             parse_line(pdu_line);
@@ -188,6 +199,7 @@ namespace gr {
           break;
         }
       }
+      return good_msg;
     }
 
     std::vector<std::string> &pdu_file_source_impl::split_helper(const std::string &s, char delim, std::vector<std::string> &elems) {
@@ -223,6 +235,7 @@ namespace gr {
       // we use "open" to use to the O_LARGEFILE flag
       if((fd = ::open(filename, O_RDONLY | OUR_O_LARGEFILE | OUR_O_BINARY)) < 0) {
         perror(filename);
+        printf("RE:#3\n");
         throw std::runtime_error("can't open file");
       }
       if(d_new_fp) {
@@ -232,10 +245,11 @@ namespace gr {
       if((d_new_fp = fdopen (fd, "rb")) == NULL) {
         perror(filename);
         ::close(fd);  // don't leak file descriptor if fdopen fails
+        printf("RE:#4\n");
         throw std::runtime_error("can't open file");
       }
-      d_updated = true;
       d_repeat = repeat;
+      d_updated = true;
     }
 
     void
@@ -311,8 +325,10 @@ namespace gr {
             data_vec = pmt::init_c32vector(items_count,(gr_complex*) &data[0]);
           else if(d_dataType == 2)
             data_vec = pmt::init_u8vector(items_count,&data[0]);
-          else
+          else{
+            printf("RE:#1\n");
             throw std::runtime_error("Unknown data type, got past first check");
+          }
           d_msg = pmt::cons(meta,data_vec);
 //          printf("The message is:\n");
 //          print(d_msg);
