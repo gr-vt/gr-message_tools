@@ -147,5 +147,5 @@ add_subdirectory(docs)
 # Install cmake search helper for this library
 ########################################################################
 install(FILES cmake/Modules/message_toolsConfig.cmake        
-    DESTINATION lib/cmake/message_tools
+    DESTINATION lib${LIB_SUFFIX}/cmake/message_tools
 )
