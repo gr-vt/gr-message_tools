@@ -91,7 +91,12 @@ find_package(CppUnit)
 # caps such as FILTER or FFT) and change the version to the minimum
 # API compatible version required.
 set(GR_REQUIRED_COMPONENTS RUNTIME BLOCKS PMT)
-find_package(Gnuradio "3.7.2" REQUIRED)
+set(MIN_GR_VERSION "3.7.3")
+find_package(Gnuradio REQUIRED)
+if("${Gnuradio_VERSION}" VERSION_LESS MIN_GR_VERSION)
+    MESSAGE(FATAL_ERROR "GnuRadio version required: >=\"" ${MIN_GR_VERSION} "\"
+found: \"" ${Gnuradio_VERSION} "\"")
+endif()
 
 if(NOT CPPUNIT_FOUND)
     message(FATAL_ERROR "CppUnit required to compile message_tools")
