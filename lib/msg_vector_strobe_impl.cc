@@ -83,7 +83,7 @@ namespace gr {
     void msg_vector_strobe_impl::run()
     {
       while(!d_finished) {
-        boost::this_thread::sleep(boost::posix_time::milliseconds(d_period_ms)); 
+        boost::this_thread::sleep(boost::posix_time::milliseconds(static_cast<long>(d_period_ms))); 
         if(d_finished) {
           return;
         }

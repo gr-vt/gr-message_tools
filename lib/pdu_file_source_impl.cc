@@ -123,7 +123,7 @@ namespace gr {
     void
     pdu_file_source_impl::run()
     {
-      boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+      boost::this_thread::sleep(boost::posix_time::milliseconds(static_cast<long>(1)));
       while(!d_finished) {
         do_update();       // update d_fp is reqd
         if(d_fp == NULL){
@@ -137,7 +137,7 @@ namespace gr {
 //          print(d_msg);
         if(good_msg){
           message_port_pub(pmt::mp("msg"), d_msg);
-          boost::this_thread::sleep(boost::posix_time::milliseconds(d_delay_ms));
+          boost::this_thread::sleep(boost::posix_time::milliseconds(static_cast<long>(d_delay_ms)));
         }
       }
     }
